@@ -70,7 +70,7 @@ public class MemberDAO {
 		String m_no = request.getParameter("m_no");
 		String v_time = request.getParameter("v_time");
 		String v_area = request.getParameter("v_area");
-		String v_comfirm = request.getParameter("v_confrim");
+		String v_comfirm = request.getParameter("v_confirm");
 		int result = 0;
 		
 		try {
@@ -106,8 +106,11 @@ public class MemberDAO {
 				sql	+= "-TO_NUMBER('19'||SUBSTR(V_JUMIN,1,2)))||'세' V_AGE,";
 				sql	+= " DECODE(SUBSTR(V_JUMIN,7,1),'1','남','2','여')V_GENDER, M_NO, ";
 				sql	+= " substr(v_time,1,2)||':'||substr(v_time,3,2)v_time,";
-				sql	+= " DECODE(V_CONFIRM,'Y','확인','N','미확인')";
+				sql	+= " DECODE(V_CONFIRM,'Y','확인','미확인')";
 				sql += " FROM TBL_VOTE_202005";
+				sql += " WHERE V_AREA ='제1투표장'";
+				
+						
 			
 			ps =conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -133,5 +136,36 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 		return "votelist.jsp";
+	}
+	public String resultAll(HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		try {
+			conn = getConnection();
+			String sql = "SELECT M1.M_NO AS , M1.M_NAME, COUNT(V1.M_NO) AS 득표수";
+				sql += " FROM TBL_MEMBER_202005 M1, TBL_VOTE_202005 V1";
+				sql += " WHERE V1.M_NO = M1.M_NO and v_confirm not in('n')";
+				sql	+= " GROUP BY M1.M_NO, M1.M_NAME";
+				sql += " ORDER BY 득표수 DESC";
+				
+				ps = conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+				
+				while (rs.next()) {
+					Member member = new Member();
+					member.setM_no(rs.getString(1));
+					member.setM_name(rs.getString(2));
+					member.setCount(rs.getString(3));
+					
+					list.add(member);
+				}
+				request.setAttribute("list", list);
+				conn.close();
+				ps.close();
+				rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "result.jsp";
 	}
 }

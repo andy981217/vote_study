@@ -26,7 +26,7 @@ function fn_submit(){;
 		fn.v_area.focus();
 		return false;
 	}
-	if(fn.v_confirm.value =="n" && ""){
+	if(fn.v_confirm.value == ""){
 		alert("유권자 확인이 선택되지 않았습니다.")
 		fn.v_confirm.focus();
 		return false

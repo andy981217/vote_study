@@ -13,8 +13,8 @@
 			<li><a href="list">후보조회</a></li>
 			<li><a href="add">투표하기</a></li>
 			<li><a href="votelist">투표검수조회</a></li>
-			<li><a href="">후보자등록</a></li>
-			<li><a href="">홈으로</a></li>
+			<li><a href="result">후보자등수</a></li>
+			<li><a href="home">홈으로</a></li>
 		</ul>
 	</nav>
 </body>

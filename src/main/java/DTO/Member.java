@@ -8,6 +8,17 @@ public class Member {
 	String m_jumin;
 	String m_city;
 	String p_tel;
+	String count;
+
+
+
+	public String getCount() {
+		return count;
+	}
+
+	public void setCount(String count) {
+		this.count = count;
+	}
 
 	public String getP_tel() {
 		return p_tel;

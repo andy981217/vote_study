@@ -67,7 +67,13 @@ public class VoteController extends HttpServlet {
 		case "/votelist":
 			site = member.selectVote(request,response);
 			break;
+		case "/result":
+			site = member.resultAll(request, response);
+			break;
 		
+		case "/home":
+			site = "index.jsp";
+			break;
 			
 			//insert = 결과값 
 			//add = view를 가져온다.?
